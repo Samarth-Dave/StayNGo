@@ -12,14 +12,16 @@
 5. [Part 3 — Code Quality with SonarQube](#part-3--code-quality-with-sonarqube)
 6. [Part 4 — Kubernetes Deployment](#part-4--kubernetes-deployment)
 7. [Part 5 — Monitoring with Prometheus & Grafana](#part-5--monitoring-with-prometheus--grafana)
-8. [Screenshots Checklist](#screenshots-checklist)
+8. [Screenshots Reference](#screenshots-reference)
 9. [Architecture Diagram](#architecture-diagram)
 
 ---
 
 ## Project Overview
 
-**StayNGo** is a hotel booking web application with a Next.js frontend and a Node.js/Supabase backend. The project was built with a complete DevOps pipeline covering containerization, CI/CD, static code analysis, Kubernetes orchestration, and real-time monitoring.
+**StayNGo** is a hotel booking web application with a Next.js frontend and a Node.js/Supabase backend. The project demonstrates a complete DevOps pipeline covering containerization, CI/CD, static code analysis, Kubernetes orchestration, and real-time monitoring.
+
+![StayNGo Application](assets/image.png)
 
 ---
 
@@ -47,12 +49,8 @@
 - Tested both services running in containers communicating over a Docker network
 
 ### Key Files
-- `Dockerfile` (frontend)
-- `Dockerfile` (backend)
+- `Dockerfile` (frontend & backend)
 - `docker-compose.yml`
-
-### Screenshot
-![Docker Compose Running](assets/Screenshot%202026-05-04%20115428.png)
 
 ---
 
@@ -61,42 +59,33 @@
 ### What We Did
 - Set up Jenkins running locally on port `8080`
 - Created a `Jenkinsfile` with a multi-stage pipeline:
-  - **Clone** — pulls code from GitHub
+  - **Clone** — pulls latest code from GitHub
   - **Build** — builds Docker images for frontend and backend
   - **Test** — runs automated tests
-  - **SonarQube Analysis** — runs static code analysis
-  - **Deploy** — deploys containers
-- Configured GitHub webhook / manual trigger to run the pipeline
-- Jenkins builds Docker images and pushes them to the local Docker daemon
+  - **SonarQube Analysis** — static code analysis stage
+  - **Deploy** — deploys updated containers
+- Jenkins pipeline log saved at `assets/jenkins_pipeline#15.txt`
 
 ### Key Files
 - `Jenkinsfile`
+- `assets/jenkins_pipeline#15.txt` — full pipeline console output
 
-### Screenshots
-![Jenkins Pipeline View](assets/Screenshot%202026-05-04%20115450.png)
-![Jenkins Build Success](assets/Screenshot%202026-05-04%20115533.png)
+### Screenshot
+![Jenkins Pipeline Stages](assets/jenkins_pipline.png)
 
 ---
 
 ## Part 3 — Code Quality with SonarQube
 
 ### What We Did
-- Integrated SonarQube into the Jenkins pipeline
-- SonarQube scans the codebase for:
-  - Code smells
-  - Bugs
-  - Vulnerabilities
-  - Code coverage
+- Integrated SonarQube into the Jenkins pipeline as a dedicated stage
+- SonarQube scans the codebase for bugs, code smells, vulnerabilities, and coverage
 - Configured `sonar-project.properties` for both frontend and backend
-- Results are visible on the SonarQube dashboard at `http://localhost:9000`
+- Results visible at `http://localhost:9000`
 
 ### Key Files
 - `sonar-project.properties`
 - `Jenkinsfile` (SonarQube stage)
-
-### Screenshot
-![SonarQube Dashboard](assets/Screenshot%202026-05-04%20144353.png)
-![SonarQube Analysis Result](assets/Screenshot%202026-05-04%20144406.png)
 
 ---
 
@@ -104,29 +93,42 @@
 
 ### What We Did
 - Migrated from Docker Compose to Kubernetes (K8s) on Docker Desktop
-- Created Kubernetes manifest files in the `k8s/` folder:
-  - `frontend-deployment.yaml` — 2 replicas of Next.js frontend
-  - `backend-deployment.yaml` — 2 replicas of Node.js backend
-  - `grafana.yaml` — Grafana monitoring dashboard
-  - `promethus.yaml` — Prometheus metrics server
-  - `node-exporter.yaml` — DaemonSet for node-level metrics
-  - `kube-state-metrics.yaml` — Pod/cluster state metrics
-  - `prometheus-rbac.yaml` — RBAC permissions for Prometheus
-- Services are exposed using `NodePort` for frontend/backend and `ClusterIP` for internal monitoring
-- Frontend accessible at `http://localhost:32000`, backend at `http://localhost:32001`
-- Scaled frontend and backend to **3 replicas each** to demonstrate horizontal scaling
+- Created Kubernetes manifest files inside the `k8s/` folder:
+  - `frontend-deployment.yaml` — Next.js frontend pods
+  - `backend-deployment.yaml` — Node.js backend pods
+  - `grafana.yaml` — Grafana monitoring UI
+  - `promethus.yaml` — Prometheus metrics server + ConfigMap
+  - `node-exporter.yaml` — DaemonSet for hardware-level metrics
+  - `kube-state-metrics.yaml` — Kubernetes object state metrics
+  - `prometheus-rbac.yaml` — RBAC ClusterRole for Prometheus API access
+- Frontend exposed on `NodePort 32000`, backend on `NodePort 32001`
+- Scaled both frontend and backend to **3 replicas** for high availability
 
 ### Key Commands
 ```bash
 kubectl apply -f k8s/
 kubectl get pods
+kubectl get deployments
+kubectl get nodes
 kubectl scale deployment stayngo-frontend --replicas=3
 kubectl scale deployment stayngo-backend --replicas=3
 ```
 
-### Screenshot
-![All Pods Running](assets/Screenshot%202026-05-04%20144937.png)
-![Kubernetes Services](assets/Screenshot%202026-05-04%20145452.png)
+### Kubernetes Node
+![kubectl get nodes](assets/get_nodes.png)
+
+### All Pods Running
+![kubectl get pods -w](assets/get_all_pods_w.png)
+
+### All Deployments
+![kubectl get deployments](assets/getdeployments.png)
+
+### Full Kubernetes Resources
+![kubectl get all (part 1)](assets/kubectl_get_all_1.png)
+![kubectl get all (part 2)](assets/kubectl_get_all_2.png)
+
+### Actual Deployment in Action
+![Actual Deployment](assets/actual_deployment.png)
 
 ---
 
@@ -135,76 +137,66 @@ kubectl scale deployment stayngo-backend --replicas=3
 ### What We Did
 
 #### Prometheus Setup
-- Deployed Prometheus as a Kubernetes Deployment
-- Configured `prometheus.yml` via ConfigMap with 3 scrape jobs:
-  1. `node-exporter` — scrapes hardware/OS metrics from port `9100`
-  2. `kube-state-metrics` — scrapes Kubernetes object state from port `8080`
-  3. `kubernetes-cadvisor` — scrapes per-container CPU/memory from the K8s API
-- Added `ClusterRole` + `ServiceAccount` (RBAC) so Prometheus can access the K8s API
+- Deployed Prometheus as a Kubernetes Deployment with a ConfigMap-based config
+- Configured 3 scrape jobs in `prometheus.yml`:
+  1. **`node-exporter`** — scrapes hardware/OS metrics on port `9100`
+  2. **`kube-state-metrics`** — scrapes Kubernetes object state on port `8080`
+  3. **`kubernetes-cadvisor`** — scrapes per-container CPU/memory from the K8s API
+- Added `ClusterRole` + `ServiceAccount` RBAC so Prometheus can call the K8s API
 
 #### Node Exporter Setup
-- Deployed as a **DaemonSet** — automatically runs one pod per node
-- Exposes hardware metrics: CPU, memory, disk, network
-- In a multi-node cluster, one node-exporter pod would run per node automatically
+- Deployed as a **DaemonSet** — automatically runs one pod per cluster node
+- Exposes hardware metrics: CPU, memory, disk I/O, network throughput
+- Scales automatically: in a multi-node cluster, each node gets its own exporter
 
 #### kube-state-metrics Setup
-- Deployed with full RBAC permissions
-- Exposes Kubernetes object metrics: pod status, deployment replicas, container states
+- Deployed with full RBAC permissions (ClusterRole + ClusterRoleBinding)
+- Exposes pod status, deployment replica counts, container states
 
 #### Grafana Setup
-- Deployed Grafana on port `32000` (via NodePort)
-- Connected Prometheus as the data source (`http://prometheus:9090`)
-- Imported **Dashboard ID 1860** (Node Exporter Full) showing:
-  - CPU usage: **64.8%**
-  - RAM usage: **83%**
-  - Swap usage: **78.3%**
-  - Network traffic (Rx/Tx kb/s)
-  - Disk space usage per mount
-  - System uptime: **4.7 hours**
+- Deployed on `NodePort 32000`, accessible at `http://localhost:32000`
+- Prometheus added as data source: `http://prometheus:9090`
+- Imported **Dashboard ID 1860** — Node Exporter Full
 
 ### Prometheus Targets (All UP ✅)
+
+![Prometheus All Targets UP](assets/targts_(all%20jobs%20up).png)
+
 | Job | Endpoint | Status |
 |---|---|---|
-| node-exporter | http://node-exporter:9100/metrics | UP |
-| kube-state-metrics | http://kube-state-metrics:8080/metrics | UP |
-| kubernetes-cadvisor | https://kubernetes.default.svc/api/v1/nodes/.../cadvisor | UP |
+| node-exporter | `http://node-exporter:9100/metrics` | 🟢 UP |
+| kube-state-metrics | `http://kube-state-metrics:8080/metrics` | 🟢 UP |
+| kubernetes-cadvisor | `https://kubernetes.default.svc/.../cadvisor` | 🟢 UP |
 
-### Screenshots
-![Prometheus Targets All UP](assets/Screenshot%202026-05-04%20151058.png)
-![Grafana Node Exporter Dashboard](assets/Screenshot%202026-05-04%20151600.png)
-![Grafana CPU and Memory Graphs](assets/Screenshot%202026-05-04%20153255.png)
-![Grafana Network Traffic](assets/Screenshot%202026-05-04%20153328.png)
-![Grafana Disk Space](assets/Screenshot%202026-05-04%20153444.png)
+### Grafana Live Metrics
+
+![Grafana Dashboard — Quick Stats (CPU 64.8%, RAM 83%)](assets/grafanam_meteric1.png)
+
+![Grafana Dashboard — CPU & Memory Graphs](assets/grafana_metric2.png)
+
+![Grafana Dashboard — Network Traffic & Disk Space](assets/grafana_metric_3.png)
 
 ---
 
-## Screenshots Checklist
+## Screenshots Reference
 
-All screenshots are stored in the `assets/` folder. Here is what each screenshot should show:
+All screenshots are in the `assets/` folder:
 
-| # | Screenshot Needed | File in assets/ |
+| # | File | What It Shows |
 |---|---|---|
-| 1 | Docker containers running (`docker ps`) | `Screenshot 2026-05-04 115428.png` |
-| 2 | Jenkins pipeline stages view | `Screenshot 2026-05-04 115450.png` |
-| 3 | Jenkins build console output / success | `Screenshot 2026-05-04 115533.png` |
-| 4 | SonarQube dashboard overview | `Screenshot 2026-05-04 144353.png` |
-| 5 | SonarQube project analysis result | `Screenshot 2026-05-04 144406.png` |
-| 6 | `kubectl get pods` — all pods running | `Screenshot 2026-05-04 144937.png` |
-| 7 | `kubectl get services` — all services | `Screenshot 2026-05-04 145452.png` |
-| 8 | Prometheus targets page — all UP | `Screenshot 2026-05-04 151058.png` |
-| 9 | Grafana home / dashboard list | `Screenshot 2026-05-04 151600.png` |
-| 10 | Grafana Node Exporter Full dashboard | `Screenshot 2026-05-04 153255.png` |
-| 11 | Grafana CPU Basic graph | `Screenshot 2026-05-04 153328.png` |
-| 12 | Grafana Memory Basic graph | `Screenshot 2026-05-04 153444.png` |
-| 13 | Grafana Network Traffic graph | `Screenshot 2026-05-04 153558.png` |
-| 14 | Grafana Disk Space graph | `Screenshot 2026-05-04 153608.png` |
-| 15 | StayNGo app running in browser | `image.png` |
-
-> ⚠️ **Missing screenshots to capture now:**
-> - StayNGo frontend running at `http://localhost:32000`
-> - `kubectl get nodes` showing `docker-desktop` node
-> - `kubectl get deployments` showing scaled replicas
-> - SonarQube quality gate result (passed/failed)
+| 1 | `image.png` | StayNGo app running in browser |
+| 2 | `jenkins_pipline.png` | Jenkins multi-stage pipeline view |
+| 3 | `jenkins_pipeline#15.txt` | Full Jenkins console log (build #15) |
+| 4 | `get_nodes.png` | `kubectl get nodes` — docker-desktop node |
+| 5 | `get_all_pods_w.png` | `kubectl get pods -w` — all pods running |
+| 6 | `getdeployments.png` | `kubectl get deployments` — scaled replicas |
+| 7 | `kubectl_get_all_1.png` | `kubectl get all` — full resources part 1 |
+| 8 | `kubectl_get_all_2.png` | `kubectl get all` — full resources part 2 |
+| 9 | `actual_deployment.png` | Live deployment view |
+| 10 | `targts_(all jobs up).png` | Prometheus targets — all 3 jobs UP |
+| 11 | `grafanam_meteric1.png` | Grafana quick stats (CPU, RAM, Swap, Uptime) |
+| 12 | `grafana_metric2.png` | Grafana CPU & Memory time-series graphs |
+| 13 | `grafana_metric_3.png` | Grafana Network Traffic & Disk Space graphs |
 
 ---
 
@@ -212,25 +204,25 @@ All screenshots are stored in the `assets/` folder. Here is what each screenshot
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    Docker Desktop (K8s)                      │
-│                                                             │
-│  ┌──────────────┐    ┌──────────────┐                       │
-│  │  Frontend    │    │   Backend    │                       │
-│  │  (x3 pods)   │───▶│  (x3 pods)  │──▶ Supabase (cloud)   │
-│  │  Next.js     │    │  Node.js    │                       │
-│  └──────────────┘    └──────────────┘                       │
-│                                                             │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │              Monitoring Stack                        │   │
-│  │                                                      │   │
-│  │  Node Exporter ──▶ Prometheus ──▶ Grafana Dashboard  │   │
-│  │  (DaemonSet)       (ConfigMap)    (Dashboard 1860)   │   │
-│  │  kube-state-metrics ──▶ Prometheus                   │   │
-│  │  cAdvisor (K8s API) ──▶ Prometheus                   │   │
-│  └──────────────────────────────────────────────────────┘   │
+│               Docker Desktop — Kubernetes Cluster            │
+│                                                              │
+│  ┌──────────────┐    ┌──────────────┐                        │
+│  │  Frontend    │    │   Backend    │                        │
+│  │  x3 replicas │───▶│  x3 replicas │──▶ Supabase (cloud)    │
+│  │  Next.js     │    │  Node.js    │                        │
+│  └──────────────┘    └──────────────┘                        │
+│                                                              │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │                 Monitoring Stack                      │   │
+│  │                                                       │   │
+│  │  node-exporter (DaemonSet) ──►                        │   │
+│  │  kube-state-metrics ────────► Prometheus ──► Grafana  │   │
+│  │  cAdvisor (K8s API) ────────►           (1860)        │   │
+│  └─────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
-         ▲
-    Jenkins CI/CD + SonarQube (running on host)
+              ▲
+   Jenkins (port 8080) + SonarQube (port 9000)
+   running on host machine
 ```
 
 ---
