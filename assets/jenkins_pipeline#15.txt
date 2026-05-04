@@ -1,0 +1,748 @@
+Started by user unknown or anonymous
+Obtained Jenkinsfile from git https://github.com/Samarth-Dave/StayNGo.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/StayNGo@2
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/StayNGo@2/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/Samarth-Dave/StayNGo.git # timeout=10
+Fetching upstream changes from https://github.com/Samarth-Dave/StayNGo.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/Samarth-Dave/StayNGo.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 44073bfd2b5ff0f96175b42eb8d693105f0bec63 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 44073bfd2b5ff0f96175b42eb8d693105f0bec63 # timeout=10
+Commit message: "Fix docker compose command in deploy stage"
+ > git rev-list --no-walk 86c00e6fcd0df9ac88604790f1ed562a265bb0a9 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] git
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/StayNGo@2/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/Samarth-Dave/StayNGo.git # timeout=10
+Fetching upstream changes from https://github.com/Samarth-Dave/StayNGo.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/Samarth-Dave/StayNGo.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 44073bfd2b5ff0f96175b42eb8d693105f0bec63 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 44073bfd2b5ff0f96175b42eb8d693105f0bec63 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main 44073bfd2b5ff0f96175b42eb8d693105f0bec63 # timeout=10
+Commit message: "Fix docker compose command in deploy stage"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (SonarQube Analysis)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] tool
+Did you forget the `def` keyword? WorkflowScript seems to be setting a field named scannerHome (to a value of type String) which could lead to memory leaks or other issues.
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] withSonarQubeEnv
+Injecting SonarQube environment variables using the configuration: SonarQube
+[Pipeline] {
+[Pipeline] sh
++ /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarScanner/bin/sonar-scanner
+06:01:52.814 INFO  Scanner configuration file: /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarScanner/conf/sonar-scanner.properties
+06:01:52.817 INFO  Project root configuration file: /var/jenkins_home/workspace/StayNGo@2/sonar-project.properties
+06:01:52.835 INFO  SonarScanner CLI 8.1.0.6389
+06:01:52.841 INFO  Linux 5.15.167.4-microsoft-standard-WSL2 amd64
+06:01:54.993 INFO  Communicating with SonarQube Community Build 26.4.0.121862
+06:01:54.994 INFO  JRE provisioning: os[linux], arch[x86_64]
+06:01:55.342 INFO  Starting SonarScanner Engine...
+06:01:55.342 INFO  Java 21.0.9 Eclipse Adoptium (64-bit)
+06:01:57.691 INFO  Load global settings
+06:01:57.769 INFO  Load global settings (done) | time=77ms
+06:01:57.771 INFO  Server id: 147B411E-AZ3TP_mj8yGM0F_ON6Vf
+06:01:57.781 INFO  Loading required plugins
+06:01:57.781 INFO  Load plugins index
+06:01:57.797 INFO  Load plugins index (done) | time=16ms
+06:01:57.797 INFO  Load/download plugins
+06:01:57.824 INFO  Load/download plugins (done) | time=27ms
+06:01:58.098 INFO  Process project properties
+06:01:58.109 INFO  Process project properties (done) | time=11ms
+06:01:58.130 INFO  Project key: stayngo
+06:01:58.131 INFO  Base dir: /var/jenkins_home/workspace/StayNGo@2
+06:01:58.131 INFO  Working dir: /var/jenkins_home/workspace/StayNGo@2/.scannerwork
+06:01:58.140 INFO  Load project settings for component key: 'stayngo'
+06:01:58.159 INFO  Load project settings for component key: 'stayngo' (done) | time=19ms
+06:01:58.186 INFO  Load quality profiles
+06:01:58.230 INFO  Load quality profiles (done) | time=44ms
+06:01:58.242 INFO  Auto-configuring with CI 'Jenkins'
+06:01:58.273 INFO  Load active rules
+06:01:58.587 INFO  Load active rules (done) | time=314ms
+06:01:58.594 INFO  Load analysis cache
+06:01:58.619 INFO  Load analysis cache | time=26ms
+06:01:58.761 INFO  Preprocessing files...
+06:01:58.880 INFO  8 languages detected in 100 preprocessed files (done) | time=118ms
+06:01:58.880 INFO  0 files ignored because of inclusion/exclusion patterns
+06:01:58.880 INFO  31 files ignored because of scm ignore settings
+06:01:58.882 INFO  Loading plugins for detected languages
+06:01:58.882 INFO  Load/download plugins
+06:01:58.890 INFO  Load/download plugins (done) | time=6ms
+06:01:59.085 INFO  Load project repositories
+06:01:59.161 INFO  Load project repositories (done) | time=75ms
+06:01:59.183 INFO  Indexing files...
+06:01:59.183 INFO  Project configuration:
+06:01:59.184 INFO    Excluded sources: **/node_modules/**, **/.next/**, **/venv/**, **/__pycache__/**, **/migrations/**
+06:01:59.212 INFO  100 files indexed (done) | time=27ms
+06:01:59.213 INFO  Quality profile for css: Sonar way
+06:01:59.213 INFO  Quality profile for docker: Sonar way
+06:01:59.213 INFO  Quality profile for js: Sonar way
+06:01:59.214 INFO  Quality profile for json: Sonar way
+06:01:59.214 INFO  Quality profile for py: Sonar way
+06:01:59.215 INFO  Quality profile for terraform: Sonar way
+06:01:59.215 INFO  Quality profile for ts: Sonar way
+06:01:59.216 INFO  Quality profile for yaml: Sonar way
+06:01:59.216 INFO  ------------- Run sensors on module StayNGo
+06:01:59.258 INFO  Load metrics repository
+06:01:59.287 INFO  Load metrics repository (done) | time=30ms
+06:01:59.827 INFO  Reflections took 77 ms to scan 1 urls, producing 25 keys and 261 values
+06:01:59.960 INFO  Sensor IaC Terraform Sensor [iac]
+06:02:00.034 INFO  2 source files to be analyzed
+06:02:00.165 INFO  2/2 source files have been analyzed
+06:02:00.165 INFO  Sensor IaC Terraform Sensor [iac] (done) | time=206ms
+06:02:00.165 INFO  Sensor IaC TFLint report Sensor [iac]
+06:02:00.165 INFO  Sensor IaC TFLint report Sensor [iac] (done) | time=0ms
+06:02:00.165 INFO  Sensor IaC CloudFormation Sensor [iac]
+06:02:00.204 INFO  There are no files to be analyzed for the CloudFormation language
+06:02:00.204 INFO  Sensor IaC CloudFormation Sensor [iac] (done) | time=38ms
+06:02:00.205 INFO  Sensor IaC cfn-lint report Sensor [iac]
+06:02:00.206 INFO  Sensor IaC cfn-lint report Sensor [iac] (done) | time=0ms
+06:02:00.206 INFO  Sensor IaC Kustomization Sensor [iac]
+06:02:00.206 INFO  Sensor IaC Kustomization Sensor [iac] (done) | time=2ms
+06:02:00.206 INFO  Sensor IaC hadolint report Sensor [iac]
+06:02:00.206 INFO  Sensor IaC hadolint report Sensor [iac] (done) | time=0ms
+06:02:00.206 INFO  Sensor IaC Azure Resource Manager Sensor [iac]
+06:02:00.207 INFO  There are no files to be analyzed for the Azure Resource Manager language
+06:02:00.207 INFO  Sensor IaC Azure Resource Manager Sensor [iac] (done) | time=2ms
+06:02:00.207 INFO  Sensor Java Config Sensor [iac]
+06:02:00.210 INFO  There are no files to be analyzed for the Java language
+06:02:00.210 INFO  Sensor Java Config Sensor [iac] (done) | time=2ms
+06:02:00.211 INFO  Sensor IaC Docker Sensor [iac]
+06:02:00.244 INFO  2 source files to be analyzed
+06:02:00.291 INFO  2/2 source files have been analyzed
+06:02:00.291 INFO  Sensor IaC Docker Sensor [iac] (done) | time=82ms
+06:02:00.291 INFO  Sensor Python Sensor [python]
+06:02:00.452 INFO  Starting global symbols computation
+06:02:00.454 INFO  3 source files to be analyzed
+06:02:00.785 INFO  3/3 source files have been analyzed
+06:02:00.787 INFO  Finished step global symbols computation in 332ms
+06:02:00.819 INFO  Starting rules execution
+06:02:00.819 INFO  3 source files to be analyzed
+06:02:01.969 INFO  3/3 source files have been analyzed
+06:02:01.970 INFO  Finished step rules execution in 1150ms
+06:02:01.970 INFO  The Python analyzer was able to leverage cached data from previous analyses for 0 out of 3 files. These files were not parsed.
+06:02:01.971 INFO  Sensor Python Sensor [python] (done) | time=1680ms
+06:02:01.972 INFO  Sensor Cobertura Sensor for Python coverage [python]
+06:02:01.975 INFO  Sensor Cobertura Sensor for Python coverage [python] (done) | time=4ms
+06:02:01.976 INFO  Sensor PythonXUnitSensor [python]
+06:02:01.978 INFO  Sensor PythonXUnitSensor [python] (done) | time=2ms
+06:02:01.978 INFO  Sensor Python Dependency Sensor [python]
+06:02:01.984 INFO  Sensor Python Dependency Sensor [python] (done) | time=5ms
+06:02:01.984 INFO  Sensor HTML [web]
+06:02:01.986 INFO  Sensor HTML [web] (done) | time=2ms
+06:02:01.986 INFO  Sensor JavaScript/TypeScript/CSS analysis [javascript]
+06:02:02.240 INFO  Detected os: Linux arch: amd64 alpine: false. Platform: LINUX_X64
+06:02:02.241 INFO  Deploy location /root/.sonar/js/node-runtime, tagetRuntime: /root/.sonar/js/node-runtime/node,  version: /root/.sonar/js/node-runtime/version.txt
+06:02:02.249 INFO  Using embedded Node.js runtime.
+06:02:02.249 INFO  Using Node.js executable: '/root/.sonar/js/node-runtime/node'.
+06:02:03.985 INFO  Memory configuration: OS (7802 MB), Node.js (2240 MB).
+06:02:04.037 INFO  WebSocket client connected on /ws
+06:02:04.039 INFO  Plugin version: [12.3.0.39932]
+06:02:05.710 INFO  Found 1 tsconfig.json file(s): [/var/jenkins_home/workspace/StayNGo@2/frontend/tsconfig.json]
+06:02:08.224 INFO  24 source files to be analyzed
+06:02:08.224 INFO  Creating TypeScript(5.9.3) program with configuration file /var/jenkins_home/workspace/StayNGo@2/frontend/tsconfig.json [lib: lib.dom.d.ts, lib.dom.iterable.d.ts, lib.esnext.d.ts]
+06:02:08.224 INFO  Analyzing 21 file(s) from tsconfig /var/jenkins_home/workspace/StayNGo@2/frontend/tsconfig.json (103 total files in program)
+06:02:08.225 INFO  Analyzing 2 file(s) using merged compiler options [lib: lib.dom.d.ts, lib.dom.iterable.d.ts, lib.esnext.d.ts]
+06:02:08.225 INFO  24/24 source files have been analyzed
+06:02:08.232 INFO  Hit the cache for 0 out of 23
+06:02:08.232 INFO  Miss the cache for 23 out of 23: ANALYSIS_MODE_INELIGIBLE [23/23]
+06:02:08.232 INFO  Sensor JavaScript/TypeScript/CSS analysis [javascript] (done) | time=6246ms
+06:02:08.232 INFO  Sensor IaC Kubernetes Sensor [iac]
+06:02:08.391 INFO  4 source files to be parsed
+06:02:08.416 INFO  4/4 source files have been parsed
+06:02:08.416 INFO  4 source files to be analyzed
+06:02:08.425 INFO  4/4 source files have been analyzed
+06:02:08.427 INFO  4 source files to be checked
+06:02:08.450 INFO  4/4 source files have been checked
+06:02:08.450 INFO  Sensor IaC Kubernetes Sensor [iac] (done) | time=218ms
+06:02:08.451 INFO  Sensor TextAndSecretsSensor [text]
+06:02:08.466 INFO  Available processors: 20
+06:02:08.466 INFO  Using 20 threads for analysis.
+06:02:08.718 INFO  The property "sonar.tests" is not set. To improve the analysis accuracy, we categorize a file as a test file if any of the following is true:
+  * The filename starts with "test"
+  * The filename contains "test." or "tests."
+  * Any directory in the file path is named: "doc", "docs", "test", "tests", "mock" or "mocks"
+  * Any directory in the file path has a name ending in "test" or "tests"
+
+06:02:08.738 INFO  Start fetching files for the text and secrets analysis
+06:02:08.744 INFO  Using Git CLI to retrieve dirty files
+06:02:08.755 INFO  Retrieving language associated files and files included via "sonar.text.inclusions" that are tracked by git
+06:02:08.758 INFO  Starting the text and secrets analysis
+06:02:08.759 INFO  85 source files to be analyzed for the text and secrets analysis
+06:02:09.173 INFO  85/85 source files have been analyzed for the text and secrets analysis
+06:02:09.176 INFO  Sensor TextAndSecretsSensor [text] (done) | time=726ms
+06:02:09.181 INFO  ------------- Run sensors on project
+06:02:09.287 INFO  Sensor Zero Coverage Sensor
+06:02:09.296 INFO  Sensor Zero Coverage Sensor (done) | time=8ms
+06:02:09.296 INFO  ------------- Gather SCA dependencies on project
+06:02:09.299 INFO  Dependency analysis skipped
+06:02:09.318 INFO  CPD Executor 6 files had no CPD blocks
+06:02:09.318 INFO  CPD Executor Calculating CPD for 21 files
+06:02:09.335 INFO  CPD Executor CPD calculation finished (done) | time=16ms
+06:02:09.339 INFO  SCM revision ID '44073bfd2b5ff0f96175b42eb8d693105f0bec63'
+06:02:09.403 INFO  Analysis report generated in 62ms, dir size=724.2 kB
+06:02:09.458 INFO  Analysis report compressed in 54ms, zip size=315.4 kB
+06:02:09.499 INFO  Analysis report uploaded in 41ms
+06:02:09.501 INFO  ANALYSIS SUCCESSFUL, you can find the results at: http://stayngo-sonarqube-1:9000/dashboard?id=stayngo
+06:02:09.501 INFO  Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+06:02:09.501 INFO  More about the report processing at http://stayngo-sonarqube-1:9000/api/ce/task?id=722cc764-700e-4b7a-9554-92e21336f328
+06:02:09.632 INFO  Analysis total time: 11.769 s
+06:02:09.634 INFO  SonarScanner Engine completed successfully
+06:02:09.969 INFO  EXECUTION SUCCESS
+06:02:09.970 INFO  Total time: 17.184s
+[Pipeline] }
+[Pipeline] // withSonarQubeEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Quality Gate)
+[Pipeline] timeout
+Timeout set to expire in 2 min 0 sec
+[Pipeline] {
+[Pipeline] waitForQualityGate
+Checking status of SonarQube task '722cc764-700e-4b7a-9554-92e21336f328' on server 'SonarQube'
+SonarQube task '722cc764-700e-4b7a-9554-92e21336f328' status is 'IN_PROGRESS'
+SonarQube task '722cc764-700e-4b7a-9554-92e21336f328' status is 'SUCCESS'
+SonarQube task '722cc764-700e-4b7a-9554-92e21336f328' completed. Quality gate is 'ERROR'
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker Images)
+[Pipeline] sh
++ docker build -t samarthdave23/stayngo-backend:latest ./backend
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 686B done
+#1 DONE 0.0s
+
+#2 [auth] library/python:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.11-slim
+#3 DONE 1.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 103B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 314B done
+#5 DONE 0.0s
+
+#6 [1/5] FROM docker.io/library/python:3.11-slim@sha256:6d85378d88a19cd4d76079817532d62232be95757cb45945a99fec8e8084b9c2
+#6 resolve docker.io/library/python:3.11-slim@sha256:6d85378d88a19cd4d76079817532d62232be95757cb45945a99fec8e8084b9c2 0.0s done
+#6 DONE 0.0s
+
+#7 [3/5] COPY requirements.txt .
+#7 CACHED
+
+#8 [4/5] RUN pip install --no-cache-dir -r requirements.txt
+#8 CACHED
+
+#9 [2/5] WORKDIR /app
+#9 CACHED
+
+#10 [5/5] COPY . .
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 exporting manifest sha256:0acac10e670682979dc4167b5eaf436c7fece8c06dbd9de6310b09c53597c7bd done
+#11 exporting config sha256:ce05ed0d469f45d03955e175476fe591dcebb08a3e8ec1398dfc964485ec806d done
+#11 exporting attestation manifest sha256:591071b9cc6d4d3dae4d862c7ee0f96a250cc999e3caad889b21319cc687ba12 done
+#11 exporting manifest list sha256:24572507dc9863e7a9a0537446c1967d3caca67af7842a0061fa2d09b68308e2 done
+#11 naming to docker.io/samarthdave23/stayngo-backend:latest done
+#11 unpacking to docker.io/samarthdave23/stayngo-backend:latest done
+#11 DONE 0.1s
+
+ [33m2 warnings found (use --debug to expand):
+[0m - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 6)
+ - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 7)
+[Pipeline] sh
++ docker build -t samarthdave23/stayngo-frontend:latest ./frontend
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.03kB done
+#1 DONE 0.0s
+
+#2 [auth] library/node:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:20-alpine
+#3 DONE 1.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 129B done
+#4 DONE 0.0s
+
+#5 [builder 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#5 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 6.36kB done
+#6 DONE 0.0s
+
+#7 [builder 2/6] WORKDIR /app
+#7 CACHED
+
+#8 [builder 5/6] COPY . .
+#8 CACHED
+
+#9 [runner 3/7] RUN addgroup --system --gid 1001 nodejs
+#9 CACHED
+
+#10 [builder 4/6] RUN npm ci
+#10 CACHED
+
+#11 [runner 5/7] COPY --from=builder /app/public ./public
+#11 CACHED
+
+#12 [builder 3/6] COPY package.json package-lock.json* ./
+#12 CACHED
+
+#13 [runner 4/7] RUN adduser --system --uid 1001 nextjs
+#13 CACHED
+
+#14 [builder 6/6] RUN npm run build
+#14 CACHED
+
+#15 [runner 6/7] COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+#15 CACHED
+
+#16 [runner 7/7] COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+#16 CACHED
+
+#17 exporting to image
+#17 exporting layers done
+#17 exporting manifest sha256:4c4fb5a375e92b1b8270956d24e7efd6f16a3add7c1057f0d786e82124310df0 done
+#17 exporting config sha256:02c25443b8e5deb708f8f0a8afe74cd750b86461491ac1ce9104374be1f37ba8 done
+#17 exporting attestation manifest sha256:338b744bef8602ac7083d28f99cbe19082b69bdd72d8d81b7d0e87c2c650d5fc done
+#17 exporting manifest list sha256:eb185dc55e75a6f54549bf0632548c3e766a8cb757bafae5e7cb9622be9e2a97 done
+#17 naming to docker.io/samarthdave23/stayngo-frontend:latest done
+#17 unpacking to docker.io/samarthdave23/stayngo-frontend:latest done
+#17 DONE 0.1s
+
+ [33m4 warnings found (use --debug to expand):
+[0m - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 14)
+ - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 22)
+ - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 23)
+ - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 40)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push to Docker Hub)
+[Pipeline] withCredentials
+Masking supported pattern matches of $DOCKER_PASS
+[Pipeline] {
+[Pipeline] sh
+Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [DOCKER_PASS]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
++ + echo ****docker
+ login -u samarthdave23 --password-stdin
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[Pipeline] sh
++ docker push samarthdave23/stayngo-backend:latest
+The push refers to repository [docker.io/samarthdave23/stayngo-backend]
+5e4ed529f795: Waiting
+89ffa4ad7fda: Waiting
+3531af2bc2a9: Waiting
+91ff8760033c: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+d7b7b91d8ae5: Waiting
+2aa7e4946225: Waiting
+1529447370e3: Waiting
+5e4ed529f795: Waiting
+89ffa4ad7fda: Waiting
+3531af2bc2a9: Waiting
+91ff8760033c: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+d7b7b91d8ae5: Waiting
+2aa7e4946225: Waiting
+1529447370e3: Waiting
+3531af2bc2a9: Waiting
+91ff8760033c: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+d7b7b91d8ae5: Waiting
+2aa7e4946225: Waiting
+1529447370e3: Waiting
+5e4ed529f795: Waiting
+89ffa4ad7fda: Waiting
+2aa7e4946225: Waiting
+1529447370e3: Waiting
+5e4ed529f795: Waiting
+89ffa4ad7fda: Waiting
+3531af2bc2a9: Waiting
+91ff8760033c: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+d7b7b91d8ae5: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+d7b7b91d8ae5: Waiting
+2aa7e4946225: Waiting
+1529447370e3: Waiting
+5e4ed529f795: Waiting
+89ffa4ad7fda: Waiting
+3531af2bc2a9: Waiting
+91ff8760033c: Waiting
+91ff8760033c: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+d7b7b91d8ae5: Waiting
+2aa7e4946225: Waiting
+1529447370e3: Waiting
+5e4ed529f795: Waiting
+89ffa4ad7fda: Waiting
+3531af2bc2a9: Waiting
+89ffa4ad7fda: Waiting
+3531af2bc2a9: Waiting
+91ff8760033c: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+d7b7b91d8ae5: Waiting
+2aa7e4946225: Waiting
+1529447370e3: Waiting
+5e4ed529f795: Waiting
+89ffa4ad7fda: Waiting
+3531af2bc2a9: Waiting
+91ff8760033c: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+d7b7b91d8ae5: Waiting
+2aa7e4946225: Waiting
+1529447370e3: Waiting
+5e4ed529f795: Waiting
+2aa7e4946225: Waiting
+1529447370e3: Waiting
+5e4ed529f795: Waiting
+89ffa4ad7fda: Waiting
+3531af2bc2a9: Waiting
+91ff8760033c: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+d7b7b91d8ae5: Waiting
+d7b7b91d8ae5: Waiting
+2aa7e4946225: Waiting
+1529447370e3: Waiting
+5e4ed529f795: Waiting
+89ffa4ad7fda: Waiting
+3531af2bc2a9: Waiting
+91ff8760033c: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+2aa7e4946225: Waiting
+1529447370e3: Waiting
+5e4ed529f795: Waiting
+89ffa4ad7fda: Layer already exists
+3531af2bc2a9: Waiting
+91ff8760033c: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+d7b7b91d8ae5: Waiting
+d7b7b91d8ae5: Waiting
+2aa7e4946225: Waiting
+1529447370e3: Waiting
+5e4ed529f795: Waiting
+3531af2bc2a9: Layer already exists
+91ff8760033c: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+2aa7e4946225: Waiting
+1529447370e3: Waiting
+5e4ed529f795: Waiting
+91ff8760033c: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+d7b7b91d8ae5: Waiting
+2aa7e4946225: Waiting
+1529447370e3: Layer already exists
+5e4ed529f795: Waiting
+91ff8760033c: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+d7b7b91d8ae5: Waiting
+5e4ed529f795: Waiting
+91ff8760033c: Waiting
+f3ba2250c524: Waiting
+7ccd73948dde: Waiting
+d7b7b91d8ae5: Waiting
+2aa7e4946225: Waiting
+91ff8760033c: Layer already exists
+f3ba2250c524: Layer already exists
+7ccd73948dde: Layer already exists
+d7b7b91d8ae5: Layer already exists
+2aa7e4946225: Waiting
+5e4ed529f795: Layer already exists
+2aa7e4946225: Waiting
+2aa7e4946225: Waiting
+2aa7e4946225: Waiting
+2aa7e4946225: Pushed
+latest: digest: sha256:24572507dc9863e7a9a0537446c1967d3caca67af7842a0061fa2d09b68308e2 size: 856
+[Pipeline] sh
++ docker push samarthdave23/stayngo-frontend:latest
+The push refers to repository [docker.io/samarthdave23/stayngo-frontend]
+e861cb9bd5ef: Waiting
+4feea04c1543: Waiting
+663781f80bac: Waiting
+dc0f27f009f2: Waiting
+6a0ac1617861: Waiting
+ba6d4fcce143: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Waiting
+fff4e2c1b189: Waiting
+663781f80bac: Waiting
+dc0f27f009f2: Waiting
+6a0ac1617861: Waiting
+ba6d4fcce143: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Waiting
+fff4e2c1b189: Waiting
+e861cb9bd5ef: Waiting
+4feea04c1543: Waiting
+fff4e2c1b189: Waiting
+e861cb9bd5ef: Waiting
+4feea04c1543: Waiting
+663781f80bac: Waiting
+dc0f27f009f2: Waiting
+6a0ac1617861: Waiting
+ba6d4fcce143: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Waiting
+fff4e2c1b189: Waiting
+e861cb9bd5ef: Waiting
+4feea04c1543: Waiting
+663781f80bac: Waiting
+dc0f27f009f2: Waiting
+6a0ac1617861: Waiting
+ba6d4fcce143: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Waiting
+4feea04c1543: Waiting
+663781f80bac: Waiting
+dc0f27f009f2: Waiting
+6a0ac1617861: Waiting
+ba6d4fcce143: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Waiting
+fff4e2c1b189: Waiting
+e861cb9bd5ef: Waiting
+dc0f27f009f2: Waiting
+6a0ac1617861: Waiting
+ba6d4fcce143: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Waiting
+fff4e2c1b189: Waiting
+e861cb9bd5ef: Waiting
+4feea04c1543: Waiting
+663781f80bac: Waiting
+dc0f27f009f2: Waiting
+6a0ac1617861: Waiting
+ba6d4fcce143: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Waiting
+fff4e2c1b189: Waiting
+e861cb9bd5ef: Waiting
+4feea04c1543: Waiting
+663781f80bac: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Waiting
+fff4e2c1b189: Waiting
+e861cb9bd5ef: Waiting
+4feea04c1543: Waiting
+663781f80bac: Waiting
+dc0f27f009f2: Waiting
+6a0ac1617861: Waiting
+ba6d4fcce143: Waiting
+6a0ac1617861: Waiting
+ba6d4fcce143: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Waiting
+fff4e2c1b189: Waiting
+e861cb9bd5ef: Waiting
+4feea04c1543: Waiting
+663781f80bac: Waiting
+dc0f27f009f2: Waiting
+fff4e2c1b189: Waiting
+e861cb9bd5ef: Waiting
+4feea04c1543: Waiting
+663781f80bac: Waiting
+dc0f27f009f2: Waiting
+6a0ac1617861: Waiting
+ba6d4fcce143: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Waiting
+fff4e2c1b189: Waiting
+e861cb9bd5ef: Waiting
+4feea04c1543: Waiting
+663781f80bac: Waiting
+dc0f27f009f2: Waiting
+6a0ac1617861: Waiting
+ba6d4fcce143: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Waiting
+fff4e2c1b189: Waiting
+e861cb9bd5ef: Waiting
+4feea04c1543: Waiting
+663781f80bac: Waiting
+dc0f27f009f2: Waiting
+6a0ac1617861: Layer already exists
+ba6d4fcce143: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+ba6d4fcce143: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Waiting
+fff4e2c1b189: Waiting
+e861cb9bd5ef: Waiting
+4feea04c1543: Waiting
+663781f80bac: Waiting
+dc0f27f009f2: Waiting
+663781f80bac: Waiting
+dc0f27f009f2: Layer already exists
+ba6d4fcce143: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Waiting
+fff4e2c1b189: Waiting
+e861cb9bd5ef: Waiting
+4feea04c1543: Waiting
+663781f80bac: Waiting
+ba6d4fcce143: Waiting
+dd8c9e169f06: Waiting
+c4727678077c: Waiting
+11e307fa497a: Waiting
+b2cbbfe903b0: Layer already exists
+fff4e2c1b189: Waiting
+e861cb9bd5ef: Waiting
+4feea04c1543: Waiting
+ba6d4fcce143: Layer already exists
+dd8c9e169f06: Waiting
+c4727678077c: Layer already exists
+11e307fa497a: Layer already exists
+fff4e2c1b189: Layer already exists
+e861cb9bd5ef: Layer already exists
+4feea04c1543: Layer already exists
+663781f80bac: Layer already exists
+dd8c9e169f06: Waiting
+dd8c9e169f06: Waiting
+dd8c9e169f06: Pushed
+latest: digest: sha256:eb185dc55e75a6f54549bf0632548c3e766a8cb757bafae5e7cb9622be9e2a97 size: 856
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] sh
++ docker compose stop backend frontend
+ Container stayngo2-frontend-1  Stopping
+ Container stayngo2-frontend-1  Stopped
+ Container stayngo2-backend-1  Stopping
+ Container stayngo2-backend-1  Stopped
+[Pipeline] sh
++ docker compose rm -f backend frontend
+Going to remove stayngo2-frontend-1, stayngo2-backend-1
+ Container stayngo2-backend-1  Removing
+ Container stayngo2-frontend-1  Removing
+ Container stayngo2-frontend-1  Removed
+ Container stayngo2-backend-1  Removed
+[Pipeline] sh
++ docker compose up -d --force-recreate backend frontend
+ Container stayngo2-backend-1  Creating
+ Container stayngo2-backend-1  Created
+ Container stayngo2-frontend-1  Creating
+ Container stayngo2-frontend-1  Created
+ Container stayngo2-backend-1  Starting
+ Container stayngo2-backend-1  Started
+ Container stayngo2-frontend-1  Starting
+ Container stayngo2-frontend-1  Started
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+✅ Pipeline SUCCESS - Code quality passed!
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
