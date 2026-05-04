@@ -57,6 +57,8 @@ pipeline {
 
         stage('Deploy') {
             steps {
+                sh 'docker compose stop backend frontend || true'
+                sh 'docker compose rm -f backend frontend || true'
                 sh 'docker compose up -d --force-recreate backend frontend'
 
             }
