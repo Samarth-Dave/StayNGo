@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: backend
-        image: stayngo-backend:latest
-        imagePullPolicy: IfNotPresent
+        image: samarthdave23/stayngo-backend:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5001
         envFrom:

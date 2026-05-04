@@ -7,6 +7,9 @@ services:
       - "5001:5001"
     # env_file:
     #   - ./backend/.env
+    environment:
+     - SUPABASE_URL=https://upfvuyzknlandrmjoolz.supabase.co
+     - SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwZnZ1eXprbmxhbmRybWpvb2x6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczNDgyNTQsImV4cCI6MjA5MjkyNDI1NH0.YqUAwZQiJvzkqx6HV5pkZX2-Gw1slcorRIiSOg1cobM
     restart: always
 
   frontend:
