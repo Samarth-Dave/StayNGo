@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  backend:
+    image: samarthdave23/stayngo-backend:latest
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./backend/.env
+    restart: always
+
+  frontend:
+    image: samarthdave23/stayngo-frontend:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:5001/api
+    depends_on:
+      - backend
+    restart: always
+
+  sonarqube:
+    image: sonarqube:community
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    volumes:
+      - sonar_data:/opt/sonarqube/data
+      - sonar_logs:/opt/sonarqube/logs
+    restart: always
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock   # Docker socket
+      - /usr/bin/docker:/usr/bin/docker             # Docker binary
+    restart: always
+
+volumes:
+  sonar_data:
+  sonar_logs:
+  jenkins_home:

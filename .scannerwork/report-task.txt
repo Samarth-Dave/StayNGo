@@ -1,0 +1,6 @@
+projectKey=stayngo
+serverUrl=http://localhost:9000
+serverVersion=26.4.0.121862
+dashboardUrl=http://localhost:9000/dashboard?id=stayngo
+ceTaskId=638510d2-2e49-44f8-84a8-a19c8879f2ec
+ceTaskUrl=http://localhost:9000/api/ce/task?id=638510d2-2e49-44f8-84a8-a19c8879f2ec

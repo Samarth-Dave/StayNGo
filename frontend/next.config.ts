@@ -5,8 +5,8 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: process.env.NEXT_PUBLIC_API_URL 
-          ? `${process.env.NEXT_PUBLIC_API_URL}/:path*` 
+        destination: process.env.NEXT_PUBLIC_API_URL
+          ? `${process.env.NEXT_PUBLIC_API_URL}/:path*`
           : "http://localhost:5001/api/:path*",
       },
     ];
@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [{ protocol: "https", hostname: "**" }],
   },
-  output: "standalone",
+  output: "standalone",   // ← This line is critical for Docker build
 };
 
 export default nextConfig;
